@@ -13,9 +13,13 @@ createRoot(document.getElementById("root")!).render(
         redirect_uri: import.meta.env.DEV
           ? "http://localhost:8080/auth/callback"
           : "https://intern-compass-frontend.onrender.com/auth/callback",
+        audience: undefined, // Explicitly undefined for SPA without custom API
+        scope: "openid profile email", // Standard OIDC scopes
       }}
       cacheLocation="localstorage"
-      useRefreshTokens
+      useRefreshTokens={true}
+      useRefreshTokensFallback={true}
+      skipRedirectCallback={false}
       onRedirectCallback={(appState) => {
         console.log("✅ Auth0 redirect callback completed", appState);
         // Navigate to intended URL or default to /chat
