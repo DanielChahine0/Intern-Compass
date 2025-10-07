@@ -4,17 +4,15 @@ import { Pool, PoolClient } from 'pg';
 // Load environment variables FIRST
 dotenv.config();
 
-// Fallback to hardcoded values if env vars are not loaded
-if (!process.env.PGHOST) {
-  process.env.PGHOST='ep-ancient-sky-ado6vkwx-pooler.c-2.us-east-1.aws.neon.tech';
-  process.env.PGDATABASE='neondb';
-  process.env.PGUSER = 'neondb_owner';
-  process.env.PGPASSWORD = 'npg_V0ks7LPqizvX';
-  process.env.PGSSLMODE = 'require';
+// Validate required environment variables
+if (!process.env.PGHOST || !process.env.PGDATABASE || !process.env.PGUSER || !process.env.PGPASSWORD) {
+  throw new Error(
+    'Missing required database environment variables. Please ensure PGHOST, PGDATABASE, PGUSER, and PGPASSWORD are set in your .env file.'
+  );
 }
 
 // Database configuration - using connection string for better compatibility
-const connectionString = `postgresql://${process.env.PGUSER}:${process.env.PGPASSWORD}@${process.env.PGHOST}/${process.env.PGDATABASE}?sslmode=require`;
+const connectionString = `postgresql://${process.env.PGUSER}:${process.env.PGPASSWORD}@${process.env.PGHOST}/${process.env.PGDATABASE}?sslmode=${process.env.PGSSLMODE || 'require'}`;
 
 const dbConfig = {
   connectionString: connectionString,

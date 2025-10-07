@@ -36,7 +36,7 @@ export interface RAGResponse {
 }
 
 export class RAGService {
-  private readonly TOP_K = 5; // Number of chunks to retrieve
+  private readonly TOP_K = parseInt(process.env.RAG_TOP_K || '5', 10); // Number of chunks to retrieve
   private readonly MIN_RELEVANCE_SCORE = 0.3; // Minimum similarity threshold
 
   /**

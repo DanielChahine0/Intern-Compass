@@ -107,11 +107,6 @@ const Chat = () => {
   const handleSend = async () => {
     if (!input.trim() || isLoading) return;
 
-    console.log('=== DEBUG: Starting handleSend ===');
-    console.log('User:', user);
-    console.log('CurrentUserId:', currentUserId);
-    console.log('API_BASE_URL from api.ts should be:', import.meta.env.VITE_API_URL || 'http://localhost:3000/api');
-
     // Ensure we have a valid user ID (use fallback if needed)
     const userId = currentUserId || -1;
     

@@ -15,8 +15,8 @@ export interface TextChunk {
 }
 
 export class ChunkingService {
-  private readonly DEFAULT_CHUNK_SIZE = 512; // tokens
-  private readonly DEFAULT_OVERLAP = 50; // tokens
+  private readonly DEFAULT_CHUNK_SIZE = parseInt(process.env.CHUNK_TOKENS || '512', 10); // tokens
+  private readonly DEFAULT_OVERLAP = parseInt(process.env.CHUNK_OVERLAP_TOKENS || '50', 10); // tokens
   private readonly CHARS_PER_TOKEN = 4; // rough estimate
 
   /**
