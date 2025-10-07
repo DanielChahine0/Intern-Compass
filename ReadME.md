@@ -1,22 +1,136 @@
-# Intern Compass
+<!-- README.md – Intern-Compass -->
+<h1 align="center">Intern Compass</h1>
+<p align="center"><em>RAG-Powered Onboarding Assistant for Seamless Employee Integration</em></p>
 
-Intern Compass is a RAG-powered (Retrieval-Augmented Generation) onboarding chatbot designed to help new employees quickly access company information, policies, and technical documentation. The application leverages Google's Gemini AI to provide intelligent responses based on uploaded PDF documents, creating a seamless onboarding experience.
+<p align="center">
+  
+  <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/DanielChahine0/Intern-Compass?style=for-the-badge&logo=GitHub">
+
+  <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/DanielChahine0/Intern-Compass?style=for-the-badge&logo=TypeScript">
+
+  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/DanielChahine0/Intern-Compass?style=for-the-badge">
+
+</p>
+
+---
+
+## Built with the tools and technologies
+
+<p align="center">
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript badge"/>
+  <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black" alt="React badge"/>
+  <img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white" alt="Vite badge"/>
+  <img src="https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white" alt="Express badge"/>
+  <img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL badge"/>
+  <img src="https://img.shields.io/badge/Google&nbsp;Gemini-8E75B2?style=for-the-badge&logo=google-gemini&logoColor=white" alt="Google Gemini badge"/>
+  <img src="https://img.shields.io/badge/Auth0-EB5424?style=for-the-badge&logo=auth0&logoColor=white" alt="Auth0 badge"/>
+  <img src="https://img.shields.io/badge/Tailwind&nbsp;CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind CSS badge"/>
+  <img src="https://img.shields.io/badge/shadcn/ui-000000?style=for-the-badge&logo=shadcnui&logoColor=white" alt="shadcn/ui badge"/>
+  <img src="https://img.shields.io/badge/TanStack&nbsp;Query-FF4154?style=for-the-badge&logo=react-query&logoColor=white" alt="TanStack Query badge"/>
+  <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js badge"/>
+  <img src="https://img.shields.io/badge/Bun-000000?style=for-the-badge&logo=bun&logoColor=white" alt="Bun badge"/>
+  <img src="https://img.shields.io/badge/npm-CB3837?style=for-the-badge&logo=npm&logoColor=white" alt="npm badge"/>
+  <img src="https://img.shields.io/badge/.ENV-ECD53F?style=for-the-badge&logo=dotenv&logoColor=black" alt=".ENV badge"/>
+  <img src="https://img.shields.io/badge/ESLint-4B32C3?style=for-the-badge&logo=eslint&logoColor=white" alt="ESLint badge"/>
+  <img src="https://img.shields.io/badge/Nodemon-76D04B?style=for-the-badge&logo=nodemon&logoColor=white" alt="Nodemon badge"/>
+  <img src="https://img.shields.io/badge/PostCSS-DD3A0A?style=for-the-badge&logo=postcss&logoColor=white" alt="PostCSS badge"/>
+  <img src="https://img.shields.io/badge/Radix&nbsp;UI-161618?style=for-the-badge&logo=radix-ui&logoColor=white" alt="Radix UI badge"/>
+</p>
+
+---
 
 ## Table of Contents
 
+- [Overview](#-overview)
 - [Features](#features)
+- [Quick Start](#-quick-start)
+- [About](#-about)
 - [Architecture](#architecture)
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
 - [Configuration](#configuration)
-- [Running the Application](#running-the-application)
 - [Database Setup](#database-setup)
 - [Project Structure](#project-structure)
 - [API Documentation](#api-documentation)
 - [Testing](#testing)
 - [Troubleshooting](#troubleshooting)
+- [Deployment](#deployment)
 - [Contributing](#contributing)
 - [License](#license)
+
+---
+
+### 📚 Overview
+Intern Compass is a RAG-powered (Retrieval-Augmented Generation) onboarding chatbot designed to help new employees quickly access company information, policies, and technical documentation. The application leverages Google's Gemini AI to provide intelligent responses based on uploaded PDF documents, creating a seamless onboarding experience.
+
+### 🚀 Quick Start
+
+#### 1. Clone the repo
+```bash
+git clone https://github.com/DanielChahine0/Intern-Compass.git
+cd Intern-Compass
+```
+
+#### 2. Install dependencies (client + server)
+```bash
+cd backend
+npm install              # installs server deps
+
+cd ../frontend
+npm install              # installs React/Vite deps (uses Bun)
+```
+
+#### 3. Create an .env file in the root directory
+```
+# Database (PostgreSQL with SSL)
+PGHOST=<your-postgres-host>
+PGDATABASE=<your-database-name>
+PGUSER=<your-database-user>
+PGPASSWORD=<your-database-password>
+PGSSLMODE=require
+
+# Gemini AI
+GEMINI_API_KEY=<your-gemini-api-key>
+GEN_MODEL=gemini-1.5-flash
+
+# Frontend (Vite loads from root via envDir: "../")
+VITE_API_URL=http://localhost:3001/api
+
+# Auth0 (for frontend)
+VITE_AUTH0_DOMAIN=<your-auth0-domain>
+VITE_AUTH0_CLIENT_ID=<your-auth0-client-id>
+VITE_AUTH0_AUDIENCE=<your-auth0-audience>
+```
+
+#### 4. Set up the database
+```bash
+cd backend
+node run-migrations.js   # applies SQL migrations
+```
+
+#### 5. Run in dev mode
+```bash
+# Terminal 1 - Backend (from /backend)
+npm run dev              # uses nodemon + ts-node
+
+# Terminal 2 - Frontend (from /frontend)
+npm run dev              # Vite dev server
+```
+
+Access the app at `http://localhost:8080` (frontend) and API at `http://localhost:3001` (backend).
+
+### 📝 About
+Intern Compass is a modern, full-stack RAG application built with TypeScript, React, Express, and PostgreSQL. The project aims to give HR teams, managers, and new employees a friction-free onboarding experience through:
+- **Intelligent Document Processing** – upload PDF documents that are automatically processed, chunked, and embedded for semantic search.
+- **AI-Powered Chat Interface** – interactive chatbot using Google Gemini AI to answer onboarding questions with contextual citations.
+- **Admin Dashboard** – manage documents, view statistics, and control the knowledge base through an intuitive interface.
+- **Semantic Search** – vector-based retrieval system powered by Gemini embeddings (text-embedding-004) that finds relevant information across all uploaded documents.
+- **Citation System** – all AI responses include citations linking back to source documents for verification and trust.
+- **Secure Authentication** – Auth0 integration with role-based access control for admin and user roles.
+- **Rate Limiting & Request Queueing** – built-in protection against Gemini API rate limits with intelligent request queueing, exponential backoff, and retry mechanisms.
+- **Responsive, Accessible UI** – React + shadcn/ui components with Radix UI primitives, styled with Tailwind CSS and compiled by Vite for <50ms HMR.
+- **Robust API** – Express routes with TypeScript type safety, input validation middleware, and PostgreSQL connection pooling.
+- **Developer-Friendly Workflow** – Nodemon auto-reloads the server, ESLint enforces code quality, and environment variables (.env) keep secrets out of source control.
+
+The badge block at the top of the `README` shows the repo's last commit date, primary language, and language count, assuring newcomers the project is actively maintained. The second badge grid highlights every key tool so contributors can instantly see if the tech stack fits their skill set.
 
 ## Features
 
@@ -523,6 +637,29 @@ node run-migrations.js
 - Verify callback URLs are correctly configured in Auth0 dashboard
 - Check that Auth0 domain and client ID match your application settings
 - Clear browser cache and cookies if authentication state is inconsistent
+
+## Deployment
+
+The application is designed for cloud deployment with the following options:
+
+### Deployment Platforms
+- **Backend**: Render.com, Railway, Heroku (Node.js with PostgreSQL addon)
+- **Frontend**: Vercel, Netlify, or served statically from backend
+- **Database**: Render PostgreSQL, Neon, Supabase, or any managed PostgreSQL service
+
+### Pre-Deployment Checklist
+1. Ensure all environment variables are configured in your hosting platform
+2. Run `npm run build` in the frontend directory to generate production assets
+3. Verify database migrations have been applied: `node run-migrations.js`
+4. Test Gemini API connection with your production API key
+5. Configure Auth0 callback URLs for your production domain
+6. Set up SSL/TLS certificates (usually automatic on Render/Vercel)
+7. Review and adjust rate limiting settings for production traffic
+
+For detailed deployment instructions, see:
+- `DEPLOYMENT.md` - Comprehensive deployment guide
+- `QUICKSTART_DEPLOY.md` - Quick deployment walkthrough
+- `DEPLOYMENT_CHECKLIST.md` - Pre-deployment verification steps
 
 ## Contributing
 
