@@ -2,14 +2,40 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Shield, Sparkles } from "lucide-react";
 import { useAuth0 } from "@auth0/auth0-react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
 const Auth = () => {
   const { isAuthenticated, isLoading, loginWithRedirect } = useAuth0();
+  const location = useLocation();
+
+  // Check if this is the callback route
+  const isCallback = location.pathname === "/auth/callback";
+
+  useEffect(() => {
+    // Log for debugging
+    if (isCallback) {
+      console.log("Auth callback route detected", { isLoading, isAuthenticated });
+    }
+  }, [isCallback, isLoading, isAuthenticated]);
 
   // If already logged in, redirect to chat
   if (!isLoading && isAuthenticated) {
     return <Navigate to="/chat" replace />;
+  }
+
+  // Show loading state during callback processing
+  if (isCallback && isLoading) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <div className="text-center space-y-4">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-primary shadow-glow animate-pulse">
+            <Shield className="h-8 w-8 text-primary-foreground" />
+          </div>
+          <p className="text-muted-foreground">Completing sign in...</p>
+        </div>
+      </div>
+    );
   }
 
   return (
