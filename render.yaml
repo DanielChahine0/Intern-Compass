@@ -54,11 +54,6 @@ services:
         sync: false # Set in Render Dashboard
       - key: VITE_AUTH0_CLIENT_ID
         sync: false
-      - key: VITE_AUTH0_CALLBACK_URL
-        fromService:
-          type: web
-          name: intern-compass-frontend
-          property: host
 
 # Optional: PostgreSQL Database (if not using external)
 databases:
