@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
+import { AuthDebugger } from "@/components/AuthDebugger";
 
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
@@ -32,6 +33,7 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
+      <AuthDebugger />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />

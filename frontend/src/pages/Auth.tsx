@@ -1,27 +1,44 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Shield, Sparkles } from "lucide-react";
+import { Shield, Sparkles, AlertCircle } from "lucide-react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Navigate, useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const Auth = () => {
-  const { isAuthenticated, isLoading, loginWithRedirect } = useAuth0();
+  const { isAuthenticated, isLoading, loginWithRedirect, error } = useAuth0();
   const location = useLocation();
+  const [debugInfo, setDebugInfo] = useState<string>("");
 
   // Check if this is the callback route
   const isCallback = location.pathname === "/auth/callback";
 
   useEffect(() => {
-    // Log for debugging
-    if (isCallback) {
-      console.log("Auth callback route detected", { isLoading, isAuthenticated });
-    }
-  }, [isCallback, isLoading, isAuthenticated]);
+    // Enhanced debugging
+    const info = {
+      pathname: location.pathname,
+      search: location.search,
+      isCallback,
+      isLoading,
+      isAuthenticated,
+      hasError: !!error,
+      errorMessage: error?.message,
+      timestamp: new Date().toISOString(),
+    };
+    console.log("Auth State:", info);
+    setDebugInfo(JSON.stringify(info, null, 2));
+  }, [location, isCallback, isLoading, isAuthenticated, error]);
 
   // If already logged in, redirect to chat
   if (!isLoading && isAuthenticated) {
+    console.log("✅ Authenticated! Redirecting to /chat");
     return <Navigate to="/chat" replace />;
+  }
+
+  // Show error if authentication failed
+  if (error) {
+    console.error("❌ Auth0 Error:", error);
   }
 
   // Show loading state during callback processing
@@ -33,6 +50,10 @@ const Auth = () => {
             <Shield className="h-8 w-8 text-primary-foreground" />
           </div>
           <p className="text-muted-foreground">Completing sign in...</p>
+          <details className="text-xs text-left bg-muted p-2 rounded max-w-md mx-auto">
+            <summary className="cursor-pointer">Debug Info</summary>
+            <pre className="mt-2 overflow-auto">{debugInfo}</pre>
+          </details>
         </div>
       </div>
     );
@@ -62,6 +83,18 @@ const Auth = () => {
 
           {/* --- Sign-in Button --- */}
           <div className="space-y-3">
+            {error && (
+              <Alert variant="destructive">
+                <AlertCircle className="h-4 w-4" />
+                <AlertDescription>
+                  Authentication failed: {error.message}
+                  <details className="mt-2 text-xs">
+                    <summary>Technical details</summary>
+                    <pre className="mt-1 overflow-auto">{JSON.stringify(error, null, 2)}</pre>
+                  </details>
+                </AlertDescription>
+              </Alert>
+            )}
             <Button
               size="lg"
               disabled={isLoading}

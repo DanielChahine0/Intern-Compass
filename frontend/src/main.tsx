@@ -16,6 +16,15 @@ createRoot(document.getElementById("root")!).render(
       }}
       cacheLocation="localstorage"
       useRefreshTokens
+      onRedirectCallback={(appState) => {
+        console.log("✅ Auth0 redirect callback completed", appState);
+        // Navigate to intended URL or default to /chat
+        window.history.replaceState(
+          {},
+          document.title,
+          appState?.returnTo || "/chat"
+        );
+      }}
     >
       <App />
     </Auth0Provider>
