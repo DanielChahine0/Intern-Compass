@@ -1,0 +1,18 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "cd frontend && npm install && npm run build",
+  "outputDirectory": "frontend/dist",
+  "framework": "vite",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ],
+  "env": {
+    "VITE_API_URL": "@vite_api_url",
+    "VITE_AUTH0_DOMAIN": "@vite_auth0_domain",
+    "VITE_AUTH0_CLIENT_ID": "@vite_auth0_client_id",
+    "VITE_AUTH0_CALLBACK_URL": "@vite_auth0_callback_url"
+  }
+}

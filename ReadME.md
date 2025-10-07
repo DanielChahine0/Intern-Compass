@@ -177,6 +177,66 @@ npm run build
 npm run preview
 ```
 
+## Deployment
+
+Intern Compass is ready to deploy to multiple platforms! We provide complete deployment configurations for:
+
+- ⭐ **Render** (All-in-One - Recommended for quick start)
+- **Vercel** (Frontend) + **Render** (Backend) - Best for production
+- **Railway** (Backend + DB) + **Netlify** (Frontend)
+- **Docker** - Platform-agnostic containerization
+
+### Quick Deploy to Render (5 minutes)
+
+1. **Push to GitHub**:
+   ```powershell
+   git add .
+   git commit -m "Ready for deployment"
+   git push origin main
+   ```
+
+2. **Deploy on Render**:
+   - Go to [Render Dashboard](https://dashboard.render.com)
+   - Click **"New"** → **"Blueprint"**
+   - Connect GitHub → Select repository
+   - Set environment variables (Gemini API key, Auth0 config)
+   - Deploy! 🚀
+
+### Deployment Documentation
+
+- **Quick Start**: See [QUICKSTART_DEPLOY.md](./QUICKSTART_DEPLOY.md) - 5-minute deployment guide
+- **Comprehensive Guide**: See [DEPLOYMENT.md](./DEPLOYMENT.md) - Detailed instructions for all platforms
+- **Summary**: See [DEPLOYMENT_SUMMARY.md](./DEPLOYMENT_SUMMARY.md) - Overview of what's configured
+
+### Pre-Deployment Check
+
+Run this before deploying to catch common issues:
+
+```powershell
+cd backend
+npm run predeploy
+```
+
+This validates:
+- ✓ Build configuration
+- ✓ Required files present
+- ✓ TypeScript compiles successfully
+- ✓ Database migrations ready
+
+### Environment Variables for Production
+
+See [.env.template](./.env.template) for a complete list of required variables.
+
+**Backend (5 required)**:
+- `GEMINI_API_KEY` - From Google AI Studio
+- `PGHOST`, `PGDATABASE`, `PGUSER`, `PGPASSWORD` - PostgreSQL connection
+- `CORS_ORIGIN` - Your frontend URL
+
+**Frontend (3 required)**:
+- `VITE_API_URL` - Your backend API URL
+- `VITE_AUTH0_DOMAIN` - Auth0 tenant domain
+- `VITE_AUTH0_CLIENT_ID` - Auth0 application client ID
+
 ## Database Setup
 
 ### 1. Create PostgreSQL Database

@@ -1,0 +1,69 @@
+# Render Blueprint for Intern Compass
+# This file defines all services needed for deployment
+
+services:
+  # Backend API Service
+  - type: web
+    name: intern-compass-backend
+    runtime: node
+    region: oregon
+    plan: free
+    buildCommand: cd backend && npm install && npm run build
+    startCommand: cd backend && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3001
+      - key: PGHOST
+        sync: false # Set in Render Dashboard
+      - key: PGDATABASE
+        sync: false
+      - key: PGUSER
+        sync: false
+      - key: PGPASSWORD
+        sync: false
+      - key: PGSSLMODE
+        value: require
+      - key: GEMINI_API_KEY
+        sync: false # Set in Render Dashboard
+      - key: GEN_MODEL
+        value: gemini-1.5-flash
+      - key: CORS_ORIGIN
+        fromService:
+          type: web
+          name: intern-compass-frontend
+          property: host
+    healthCheckPath: /api/health
+
+  # Frontend Service
+  - type: web
+    name: intern-compass-frontend
+    runtime: node
+    region: oregon
+    plan: free
+    buildCommand: cd frontend && npm install && npm run build
+    startCommand: cd frontend && npx serve dist -p $PORT
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: intern-compass-backend
+          envVarKey: RENDER_EXTERNAL_URL
+      - key: VITE_AUTH0_DOMAIN
+        sync: false # Set in Render Dashboard
+      - key: VITE_AUTH0_CLIENT_ID
+        sync: false
+      - key: VITE_AUTH0_CALLBACK_URL
+        fromService:
+          type: web
+          name: intern-compass-frontend
+          property: host
+
+# Optional: PostgreSQL Database (if not using external)
+databases:
+  - name: intern-compass-db
+    databaseName: intern_compass
+    user: intern_compass_user
+    plan: free
+    region: oregon
