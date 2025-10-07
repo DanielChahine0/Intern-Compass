@@ -1,6 +1,10 @@
 # Environment Variables Quick Reference
 
-## Backend (.env in backend/)
+## Single .env File (Root Directory)
+
+All environment variables are in **one file**: `.env` in the root directory.
+
+### Backend Variables
 
 ```bash
 # Required
@@ -22,7 +26,7 @@ CHUNK_OVERLAP_TOKENS=180
 FRONTEND_URL=http://localhost:5173
 ```
 
-## Frontend (.env in frontend/)
+### Frontend Variables (VITE_ prefix)
 
 ```bash
 # Required
@@ -34,15 +38,12 @@ VITE_AUTH0_CLIENT_ID=your-client-id
 ## Quick Setup
 
 ```bash
-# Backend
-cd backend
-cp .env.example .env
-# Edit .env and add your values
+# Edit the root .env file
+code .env
 
-# Frontend
-cd ../frontend
-cp .env.example .env
-# Edit .env and add your values
+# Add your credentials
+# Backend will load from: ../env (from backend/src/)
+# Frontend will load from: ../.env (from frontend/)
 ```
 
 ## Common Issues

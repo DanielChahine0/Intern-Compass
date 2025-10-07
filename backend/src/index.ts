@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import path from 'path';
 import { db } from './database';
 import { geminiConfig } from './config/gemini';
 import geminiRoutes from './routes/gemini';
@@ -8,8 +9,9 @@ import usersRoutes from './routes/users';
 import chatRoutes from './routes/chat';
 import { requestLogger } from './middleware/validation';
 import adminRoutes from './routes/admin';
-// Load environment variables
-dotenv.config();
+
+// Load environment variables from root .env file
+dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
 const app = express();
 const PORT = process.env.PORT || 3001;

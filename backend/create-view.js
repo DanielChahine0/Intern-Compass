@@ -3,8 +3,11 @@
  * This is a minimal migration to fix the immediate error
  */
 
+const path = require('path');
 const { Pool } = require('pg');
-require('dotenv').config();
+
+// Load environment variables from root .env file
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 
 const connectionString = `postgresql://${process.env.PGUSER}:${process.env.PGPASSWORD}@${process.env.PGHOST}/${process.env.PGDATABASE}?sslmode=require`;
 

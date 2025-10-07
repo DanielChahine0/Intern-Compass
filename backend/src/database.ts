@@ -1,8 +1,9 @@
 import dotenv from 'dotenv';
 import { Pool, PoolClient } from 'pg';
+import path from 'path';
 
-// Load environment variables FIRST
-dotenv.config();
+// Load environment variables from root .env file
+dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
 // Validate required environment variables
 if (!process.env.PGHOST || !process.env.PGDATABASE || !process.env.PGUSER || !process.env.PGPASSWORD) {

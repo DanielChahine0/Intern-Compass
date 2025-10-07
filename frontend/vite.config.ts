@@ -4,6 +4,8 @@ import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  // Load .env from root directory (parent of frontend folder)
+  envDir: path.resolve(__dirname, ".."),
   server: {
     host: "::",
     port: 8080,

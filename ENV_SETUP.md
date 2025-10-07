@@ -1,17 +1,27 @@
 # Environment Variables Setup Guide
 
-This guide explains how to set up environment variables for both the backend and frontend of the Intern Compass application.
+This guide explains how to set up environment variables for the Intern Compass application.
 
 ## Overview
 
-The application uses environment variables for configuration. Sensitive information like API keys and database credentials should **never** be committed to version control.
+The application uses a **single `.env` file** located in the root directory of the project. Both the backend and frontend read from this same file.
 
-## Backend Environment Variables
+## Location
 
-### Location
-Create a `.env` file in the `backend/` directory.
+**`.env`** file must be in the root directory:
+```
+Intern-Compass/
+├── .env          ← Single environment file here
+├── backend/
+├── frontend/
+└── ...
+```
 
-### Required Variables
+## All Environment Variables
+
+Edit the `.env` file in the root directory with the following variables:
+
+### Backend Configuration
 
 ```bash
 # Server Configuration
@@ -62,46 +72,24 @@ S3_FORCE_PATH_STYLE=true
 LOG_LEVEL=info
 ```
 
-## Frontend Environment Variables
-
-### Location
-Create a `.env` file in the `frontend/` directory.
-
-### Important Notes
-- All frontend environment variables **MUST** be prefixed with `VITE_`
-- Vite only exposes variables starting with `VITE_` to the client-side code
-- Never expose sensitive backend credentials in frontend env vars
-
-### Required Variables
-
-```bash
-# API Configuration
-VITE_API_URL=http://localhost:3001/api
-
-# Auth0 Configuration
-VITE_AUTH0_DOMAIN=your-auth0-domain.auth0.com
-VITE_AUTH0_CLIENT_ID=your-auth0-client-id
-```
-
 ## Setup Instructions
 
-### 1. Backend Setup
+### Single .env File Setup
+
+The `.env` file in the root directory is shared by both backend and frontend:
 
 ```bash
-cd backend
-cp .env.example .env
-# Edit .env and fill in your actual values
+# From the root directory (Intern-Compass/)
+# The .env file should already exist, just edit it with your values
+code .env  # or use any text editor
 ```
 
-### 2. Frontend Setup
+**Important Notes:**
+- Backend uses all variables
+- Frontend only uses variables prefixed with `VITE_`
+- Both read from the same root `.env` file automatically
 
-```bash
-cd frontend
-cp .env.example .env
-# Edit .env and fill in your actual values
-```
-
-### 3. Get Required Credentials
+### Get Required Credentials
 
 #### Neon PostgreSQL Database
 1. Sign up at [neon.tech](https://neon.tech)
